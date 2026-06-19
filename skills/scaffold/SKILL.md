@@ -1,13 +1,25 @@
 ---
 name: scaffold
-description: Scaffold a complete agent setup for any goal. Use when you want to configure a project with curated skills, tailored AGENTS.md, process state machines, and harness-specific extensions. Run once per domain — re-run to compose multiple domains.
+description: Scaffold a complete agent setup for any goal. Use when you want to configure a project with curated skills, tailored AGENTS.md, process state machines, and harness-specific extensions. Run once per domain - re-run to compose multiple domains.
 ---
 
 # Scaffold
 
-Set up a complete, goal-driven agent environment for a project. The user states a goal, you interview them, research the best skills and tools, present a plan for approval, then write everything into their project directory.
+Set up a complete, goal-driven agent environment for any project directory. The user states a goal, you interview them, research the best skills and tools, present a plan for approval, then write everything into their **target directory** - which can be anywhere on disk, not just the current working directory.
 
-Each run targets **one domain**. Re-run `/scaffold` to compose additional domains — skills are idempotent, AGENTS.md is append-only (never overwritten), and state machines compose by adding new sections.
+The scaffold skill itself lives globally (installed as a Pi package). It writes output to whichever project directory the user specifies. Run it from anywhere; target any project.
+
+Each run targets **one domain**. Re-run `/scaffold` to compose additional domains - skills are idempotent, AGENTS.md is append-only (never overwritten), and state machines compose by adding new sections.
+
+## Target directory
+
+All file writes and skill installations go to the **target directory** the user specifies in Phase 1. This can be:
+
+- The current working directory (default)
+- Any absolute path on disk (e.g. `~/code/my-fintech-app`, `/work/portfolio-analysis`)
+- A directory that doesn't exist yet (it will be created)
+
+All commands in Phase 3 use `<target_dir>` as the base path. Never assume the current working directory is the target.
 
 ## Process
 
@@ -15,7 +27,7 @@ Each run targets **one domain**. Re-run `/scaffold` to compose additional domain
 
 Run a structured interview using the `interview` tool with these questions:
 
-1. **Primary goal** — single select from the catalog domains plus "Other (describe)":
+1. **Primary goal** - single select from the catalog domains plus "Other (describe)":
    - Software Engineering
    - Financial Analysis & Investment
    - Content Creation & Personal Branding
@@ -25,15 +37,20 @@ Run a structured interview using the `interview` tool with these questions:
    - Product Management
    - Other (describe in your own words)
 
-2. **Harnesses** — multi-select: Pi, Claude Code, Cursor, Codex, Gemini CLI, Other
+2. **Harnesses** - multi-select: Pi, Claude Code, Cursor, Codex, Gemini CLI, Other
 
-3. **Team size** — solo / small team (2-5) / large team (6+)
+3. **Team size** - solo / small team (2-5) / large team (6+)
 
-4. **Project directory** — absolute path where output should be written. Default: current working directory.
+4. **Target directory** - absolute path to the project to scaffold. This can be any directory on disk - it does NOT have to be the current working directory. If it doesn't exist, it will be created. Default: current working directory.
 
-5. **Communication style** — caveman (ultra-compressed) / normal / verbose
+   Examples:
+   - `~/code/my-saas-app` - scaffold an existing project
+   - `~/projects/new-fintech-tool` - scaffold a new project (directory will be created)
+   - `.` - current working directory
 
-6. **Issue tracking** — GitHub / GitLab / kanban-md / Linear / local markdown / other
+5. **Communication style** - caveman (ultra-compressed) / normal / verbose
+
+6. **Issue tracking** - GitHub / GitLab / kanban-md / Linear / local markdown / other
 
 After the structured interview, have a **freeform chat** to understand:
 - Specific sub-domains or focus areas
@@ -98,22 +115,24 @@ Identify capabilities the user needs that aren't covered by catalog + marketplac
 
 Use the `interview` tool to present the plan for approval. Show:
 
-**Skills to install** — a table with columns:
+**Skills to install** - a table with columns:
 - Skill name (with link to `https://skills.sh/<owner>/<repo>/<skill>`)
 - Source (owner/repo)
 - Installs (from live search)
-- Included? (✅ recommended / ☐ optional) — user can toggle
+- Included? (recommended / optional) - user can toggle
 
-**Custom skills to generate** — for each gap:
+**Custom skills to generate** - for each gap:
 - Skill name
 - Description
-- Generate? (✅ / ☐) — user can toggle
+- Generate? - user can toggle
 
-**Extensions** — for each selected harness, show recommended extensions with toggle.
+**Extensions** - for each selected harness, show recommended extensions with toggle.
 
-**Preview** — show the AGENTS.md template and process state machine that will be used.
+**Preview** - show the AGENTS.md template and process state machine that will be used.
 
-**Add custom skills** — provide a text input for the user to add `owner/repo@skill` identifiers they already know about.
+**Add custom skills** - provide a text input for the user to add `owner/repo@skill` identifiers they already know about.
+
+**Target directory** - confirm where everything will be written.
 
 Wait for the user to approve or adjust the plan before proceeding.
 
@@ -124,10 +143,16 @@ Wait for the user to approve or adjust the plan before proceeding.
 For each approved skill:
 
 ```bash
-cd <project_directory> && npx skills add <owner/repo@skill> --yes
+cd <target_dir> && npx skills add <owner/repo@skill> --yes
 ```
 
-This installs to `.agents/skills/` (universal) and symlinks to harness-specific directories automatically. It is idempotent — already-installed skills are skipped.
+This installs to `<target_dir>/.agents/skills/` (universal) and symlinks to harness-specific directories automatically. It is idempotent - already-installed skills are skipped.
+
+If `<target_dir>` doesn't exist yet, create it first:
+
+```bash
+mkdir -p <target_dir>
+```
 
 #### 3.2 Install Pi extensions
 
@@ -142,11 +167,11 @@ Only install extensions the user approved in the plan. Skip if already installed
 
 #### 3.3 Configure MCP servers
 
-If Claude Code, Cursor, or other MCP-using harnesses are selected, write MCP server config entries to the appropriate file:
+If Claude Code, Cursor, or other MCP-using harnesses are selected, write MCP server config entries to the appropriate file **inside the target directory**:
 
-- **Claude Code**: append to `.mcp.json` in project root
-- **Cursor**: append to `.cursor/mcp.json` or project MCP config
-- **Shared**: write to `.mcp.json` (read by most MCP clients)
+- **Claude Code**: append to `<target_dir>/.mcp.json`
+- **Cursor**: append to `<target_dir>/.cursor/mcp.json`
+- **Shared**: write to `<target_dir>/.mcp.json` (read by most MCP clients)
 
 Format:
 
@@ -175,7 +200,7 @@ For each custom skill the user approved:
    - What reference material is needed? (templates, glossaries, examples)
    - Should it be model-invoked or user-invoked? (`disable-model-invocation`)
 
-2. Follow the `writing-great-skills` principles — read:
+2. Follow the `writing-great-skills` principles - read:
 
    ```
    Read: references/custom-skills.md (relative to this skill's directory)
@@ -196,9 +221,9 @@ For each custom skill the user approved:
 
    Include this notice at the top of the body:
 
-   > ⚠️ This skill was generated by fat-skills-scaffold. Test thoroughly before relying on it in production workflows.
+   > This skill was generated by fat-skills-scaffold. Test thoroughly before relying on it in production workflows.
 
-4. Write to `<project_directory>/.agents/skills/<skill-name>/SKILL.md`
+4. Write to `<target_dir>/.agents/skills/<skill-name>/SKILL.md`
 
 5. Move any reference material to sibling files in the skill directory (progressive disclosure).
 
@@ -212,73 +237,78 @@ Read: templates/<domain>.md (relative to this skill's directory)
 
 Fill in the template slots using interview answers:
 
-- `{{communication_style}}` — from Phase 1
-- `{{domain_context}}` — from freeform chat
-- `{{state_machine}}` — from `state-machines/<domain>.md`
-- `{{tech_stack}}` — from interview
-- `{{architecture}}` — from interview
-- `{{issue_tracker_config}}` — from interview
-- `{{triage_labels_config}}` — defaults or from interview
-- `{{domain_docs_config}}` — defaults or from interview
+- `{{communication_style}}` - from Phase 1
+- `{{domain_context}}` - from freeform chat
+- `{{state_machine}}` - from `state-machines/<domain>.md`
+- `{{tech_stack}}` - from interview
+- `{{architecture}}` - from interview
+- `{{issue_tracker_config}}` - from interview
+- `{{triage_labels_config}}` - defaults or from interview
+- `{{domain_docs_config}}` - defaults or from interview
 
-**If AGENTS.md already exists** (re-run for cross-domain): do NOT overwrite. Instead, append new sections that don't conflict with existing content. Merge the new domain's state machine as an additional section. Preserve all existing customizations.
+**If `<target_dir>/AGENTS.md` already exists** (re-run for cross-domain): do NOT overwrite. Instead, append new sections that don't conflict with existing content. Merge the new domain's state machine as an additional section. Preserve all existing customizations.
 
 **If no AGENTS.md exists**: create it with the filled template.
+
+**If the target directory doesn't exist yet**: create it with `mkdir -p <target_dir>` before writing.
 
 #### 3.6 Derive harness-specific context
 
 For each selected harness (beyond the universal AGENTS.md):
 
-**Claude Code** — if selected:
-- Write `CLAUDE.md` as a full copy of AGENTS.md
+**Claude Code** - if selected:
+- Write `<target_dir>/CLAUDE.md` as a full copy of AGENTS.md
 - Prepend: `<!-- Derived from AGENTS.md by fat-skills-scaffold. Edit AGENTS.md and re-run /scaffold to update. -->`
 - On re-runs, regenerate CLAUDE.md entirely (it's derived, not source-of-truth)
 
-**Cursor** — if selected:
-- Write `.cursor/rules/fat-skills-scaffold.md` with the AGENTS.md content
+**Cursor** - if selected:
+- Write `<target_dir>/.cursor/rules/fat-skills-scaffold.md` with the AGENTS.md content
 - Prepend the same derivation comment
 
 #### 3.7 Create directory structure
 
 ```bash
-mkdir -p <project_directory>/.scratch
-mkdir -p <project_directory>/docs/agents
+mkdir -p <target_dir>
+mkdir -p <target_dir>/.scratch
+mkdir -p <target_dir>/docs/agents
 ```
 
 Add domain-specific directories if relevant (e.g. `models/` for finance, `content/` for branding).
 
 #### 3.8 Write supporting docs
 
-Write to `<project_directory>/docs/agents/`:
+Write to `<target_dir>/docs/agents/`:
 
-- `issue-tracker.md` — based on the user's tracking preference
-- `triage-labels.md` — the five canonical roles mapped to their tracker's labels
-- `domain.md` — single-context or multi-context layout
+- `issue-tracker.md` - based on the user's tracking preference
+- `triage-labels.md` - the five canonical roles mapped to their tracker's labels
+- `domain.md` - single-context or multi-context layout
 
 Use the user's issue tracker choice to pick the right template. If they chose GitHub, document `gh` CLI usage. If local markdown, document the `.scratch/` convention.
 
 ### Phase 4: Verification & Handoff
 
-1. **Validate** — check that:
-   - Skills directories exist under `.agents/skills/` with valid `SKILL.md` files
-   - AGENTS.md exists and is non-empty
-   - Any CLAUDE.md / cursor rules were written
+1. **Validate** - check that:
+   - `<target_dir>/.agents/skills/` exists with valid `SKILL.md` files
+   - `<target_dir>/AGENTS.md` exists and is non-empty
+   - Any `<target_dir>/CLAUDE.md` / `<target_dir>/.cursor/rules/` were written
    - No broken references in the plan
 
-2. **Summarize** — tell the user:
+2. **Summarize** - tell the user:
    - How many skills were installed (catalog + marketplace + custom)
-   - Where AGENTS.md was written
+   - Target directory: `<target_dir>`
+   - Where AGENTS.md was written (`<target_dir>/AGENTS.md`)
    - Which harness-specific files were derived
    - Which extensions/MCP servers were configured
 
-3. **Next steps** — suggest:
+3. **Next steps** - suggest:
+   - Open the target directory in their harness of choice
    - Run `/setup-matt-pocock-skills` (if engineering domain with Matt Pocock skills installed) to configure issue tracker
    - Try an initial prompt relevant to their domain
    - Re-run `/scaffold` to add another domain
 
 ## Re-running for cross-domain composition
 
-When `/scaffold` is run again on a project that already has an AGENTS.md:
+When `/scaffold` is run again targeting a project that already has an AGENTS.md:
 
 1. In Phase 1, note that this is an additional domain
 2. In Phase 2, include existing skills in the gap analysis (don't re-recommend installed skills)
@@ -290,7 +320,7 @@ When `/scaffold` is run again on a project that already has an AGENTS.md:
 
 ## Reference guides
 
-- [domain-catalog.md](references/domain-catalog.md) — how to read and use the domain catalog
-- [skill-sources.md](references/skill-sources.md) — known skill sources and search patterns
-- [cross-harness.md](references/cross-harness.md) — harness compatibility and extension mapping
-- [custom-skills.md](references/custom-skills.md) — principles for generating custom skills
+- [domain-catalog.md](references/domain-catalog.md) - how to read and use the domain catalog
+- [skill-sources.md](references/skill-sources.md) - known skill sources and search patterns
+- [cross-harness.md](references/cross-harness.md) - harness compatibility and extension mapping
+- [custom-skills.md](references/custom-skills.md) - principles for generating custom skills

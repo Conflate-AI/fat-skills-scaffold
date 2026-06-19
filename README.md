@@ -1,27 +1,39 @@
 # fat-skills-scaffold
 
-Goal-driven agent setup bootstrapper. State your goal, answer a short interview, and get a complete agent environment with curated skills, tailored AGENTS.md, process state machines, and harness-specific extensions.
+Goal-driven agent setup bootstrapper. State your goal, answer a short interview, and get a complete agent environment with curated skills, tailored AGENTS.md, process state machines, and harness-specific extensions — written to any directory on disk.
 
 Works with **Pi, Claude Code, Cursor, Codex, Gemini CLI**, and any harness that reads from `.agents/skills/` or `AGENTS.md`.
+
+The scaffold skill itself is a global Pi package — it lives outside your projects. You run it from anywhere and point it at whichever project directory you want to set up.
 
 ## Quick start
 
 ```bash
-# Install as a Pi package
+# Install as a Pi package (global tool — not per-project)
 pi install git:github.com/Conflate-AI/fat-skills-scaffold
 
-# In any project directory, run the scaffold skill
+# In any Pi session, run the scaffold skill
 /scaffold
 ```
 
 The skill walks you through a 4-phase workflow:
 
-1. **Goal discovery** — structured interview about what you're building, which harnesses you use, team size, communication style
+1. **Goal discovery** — structured interview about what you're building, which harnesses you use, team size, communication style, and **which directory to scaffold into** (any path on disk, not just the current one)
 2. **Research & planning** — catalog lookup, live marketplace search, gap analysis, plan presented for your approval (with install counts, links to review, and override toggles)
 3. **Generate & install** — skills installed via `npx skills add`, AGENTS.md generated, extensions configured, custom skills created for gaps
 4. **Verify & handoff** — everything validated, summary of what was created, next steps suggested
 
 Run `/scaffold` again to add another domain. Skills are idempotent, AGENTS.md is append-only, state machines compose.
+
+## Target directory
+
+All output goes to the **target directory** you specify in the interview. This can be:
+
+- The current working directory (default)
+- Any absolute path on disk (e.g. `~/code/my-fintech-app`, `/work/portfolio-analysis`)
+- A directory that doesn't exist yet (it will be created)
+
+You can run Pi from anywhere and scaffold into any project. The scaffold skill is a global tool that writes to wherever you point it.
 
 ## How it works
 
