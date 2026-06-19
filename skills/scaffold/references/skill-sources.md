@@ -43,7 +43,7 @@ cd <project_directory> && npx skills add <owner/repo@skill> --yes
 ### Handling failures
 
 If `npx skills search` fails:
-- Inform the user: "skills.sh appears to be unavailable. I'll proceed with catalog recommendations only. Re-run `/bootstrap` later for full marketplace coverage."
+- Inform the user: "skills.sh appears to be unavailable. I'll proceed with catalog recommendations only. Re-run `/scaffold` later for full marketplace coverage."
 - Continue with catalog skills only — don't block the entire setup
 
 If `npx skills add` fails for a specific skill:

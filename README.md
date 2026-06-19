@@ -10,8 +10,8 @@ Works with **Pi, Claude Code, Cursor, Codex, Gemini CLI**, and any harness that 
 # Install as a Pi package
 pi install git:github.com/Conflate-AI/fat-skills-scaffold
 
-# In any project directory, run the bootstrap skill
-/bootstrap
+# In any project directory, run the scaffold skill
+/scaffold
 ```
 
 The skill walks you through a 4-phase workflow:
@@ -21,7 +21,7 @@ The skill walks you through a 4-phase workflow:
 3. **Generate & install** — skills installed via `npx skills add`, AGENTS.md generated, extensions configured, custom skills created for gaps
 4. **Verify & handoff** — everything validated, summary of what was created, next steps suggested
 
-Run `/bootstrap` again to add another domain. Skills are idempotent, AGENTS.md is append-only, state machines compose.
+Run `/scaffold` again to add another domain. Skills are idempotent, AGENTS.md is append-only, state machines compose.
 
 ## How it works
 
@@ -39,7 +39,7 @@ Engineering gets TDD + triage + PRD. Finance gets research → analyze → valid
 
 ### Custom skills fill the gaps
 
-When no existing skill covers a need, the bootstrap skill generates a custom one. It interviews you per skill, follows the `writing-great-skills` principles (leading words, progressive disclosure, pruning), and writes a spec-compliant `SKILL.md` with a `generated-by: fat-skills-scaffold` metadata tag.
+When no existing skill covers a need, the scaffold skill generates a custom one. It interviews you per skill, follows the `writing-great-skills` principles (leading words, progressive disclosure, pruning), and writes a spec-compliant `SKILL.md` with a `generated-by: fat-skills-scaffold` metadata tag.
 
 ## Domains
 
@@ -239,7 +239,7 @@ Product management workflows — PRDs, user stories, roadmap planning, feature p
 
 ## Cross-domain composition
 
-Run `/bootstrap` once per domain. Each run adds to the project without overwriting:
+Run `/scaffold` once per domain. Each run adds to the project without overwriting:
 
 | What | Re-run behavior |
 |---|---|
@@ -249,7 +249,7 @@ Run `/bootstrap` once per domain. Each run adds to the project without overwriti
 | State machines | New domain adds its own section |
 | Extensions | `pi install` skips already-installed |
 
-Example: run `/bootstrap` for engineering, then run it again for finance. You get both sets of skills, both state machines in AGENTS.md, and finance-specific extensions added.
+Example: run `/scaffold` for engineering, then run it again for finance. You get both sets of skills, both state machines in AGENTS.md, and finance-specific extensions added.
 
 ## Custom domains
 
@@ -275,7 +275,7 @@ No catalog needed — the system works for any domain.
 
 CLAUDE.md and `.cursor/rules/` are derived from AGENTS.md with a source header:
 ```html
-<!-- Derived from AGENTS.md by fat-skills-scaffold. Edit AGENTS.md and re-run /bootstrap to update. -->
+<!-- Derived from AGENTS.md by fat-skills-scaffold. Edit AGENTS.md and re-run /scaffold to update. -->
 ```
 
 ## Extending the system
@@ -340,7 +340,7 @@ extensions:
 
 ### Template format
 
-Templates use `{{slot_name}}` placeholders that the bootstrap skill fills from interview answers:
+Templates use `{{slot_name}}` placeholders that the scaffold skill fills from interview answers:
 
 - `{{communication_style}}` — caveman / normal / verbose
 - `{{domain_context}}` — freeform context from the chat phase
@@ -361,7 +361,7 @@ Markdown with an ASCII state flow diagram, transition guards table, and detailed
 fat-skills-scaffold/
 ├── package.json                          # Pi package manifest
 ├── skills/
-│   └── bootstrap/                        # The meta-skill
+│   └── scaffold/                        # The meta-skill
 │       ├── SKILL.md                      # 4-phase workflow
 │       └── references/
 │           ├── domain-catalog.md         # How to read catalog YAML

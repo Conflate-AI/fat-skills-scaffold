@@ -47,7 +47,7 @@ Different harnesses have different extension/tool ecosystems, but there are func
 | Database | — | postgres-mcp | — | postgres-mcp |
 | Generic tool bridge | pi-mcp-adapter | native MCP | native MCP | — |
 
-**Our approach**: The catalog maps each capability to harness-specific implementations. The bootstrap skill generates the right config for the user's harness(es).
+**Our approach**: The catalog maps each capability to harness-specific implementations. The scaffold skill generates the right config for the user's harness(es).
 
 ---
 
@@ -57,7 +57,7 @@ Different harnesses have different extension/tool ecosystems, but there are func
 fat-skills-scaffold/
 ├── package.json                     # pi-package manifest
 ├── skills/
-│   └── bootstrap/                   # The meta-skill — main entry point
+│   └── scaffold/                   # The meta-skill — main entry point
 │       ├── SKILL.md                 # Interview → plan → write workflow
 │       └── references/
 │           ├── domain-catalog.md    # How to use the catalog
@@ -166,7 +166,7 @@ Also show:
 
 6. **Optionally derive harness-specific context**:
    - `CLAUDE.md` if Claude Code selected — full copy of AGENTS.md with header:
-     `<!-- Derived from AGENTS.md by fat-skills-scaffold. Edit AGENTS.md and re-run /bootstrap to update. -->`
+     `<!-- Derived from AGENTS.md by fat-skills-scaffold. Edit AGENTS.md and re-run /scaffold to update. -->`
    - `.cursor/rules/` if Cursor selected — derived from AGENTS.md
 
 7. **Create directory structure** — `.scratch/`, `docs/agents/`, domain-specific dirs
@@ -384,11 +384,11 @@ extensions:
 
 ## 6. Cross-Domain Composition via Re-Running
 
-The bootstrap skill is **re-runnable**. Each invocation targets one domain:
+The scaffold skill is **re-runnable**. Each invocation targets one domain:
 
 ```
 # First run — set up engineering
-/bootstrap
+/scaffold
 > "I'm building a SaaS product — need engineering + go-to-market"
 > Selects: engineering (primary), gtm (secondary)
 
@@ -396,7 +396,7 @@ The bootstrap skill is **re-runnable**. Each invocation targets one domain:
 # User works for a while...
 
 # Second run — add finance analysis
-/bootstrap
+/scaffold
 > "I also need financial modeling for investor reporting"
 > Selects: finance
 
@@ -573,11 +573,11 @@ RESEARCH ──► POSITION ──► PLAN ──► LAUNCH ──► MEASURE �
 ### Phase 1: Package Scaffold & Bootstrap Skill (Core)
 
 1. Create `package.json` with pi manifest
-2. Write `bootstrap/SKILL.md` — the 4-phase workflow
-3. Write `bootstrap/references/domain-catalog.md` — how to read & use catalog
-4. Write `bootstrap/references/skill-sources.md` — skills.sh, known repos, search patterns
-5. Write `bootstrap/references/cross-harness.md` — harness compat, extension mapping
-6. Write `bootstrap/references/custom-skills.md` — distilled writing-great-skills principles
+2. Write `scaffold/SKILL.md` — the 4-phase workflow
+3. Write `scaffold/references/domain-catalog.md` — how to read & use catalog
+4. Write `scaffold/references/skill-sources.md` — skills.sh, known repos, search patterns
+5. Write `scaffold/references/cross-harness.md` — harness compat, extension mapping
+6. Write `scaffold/references/custom-skills.md` — distilled writing-great-skills principles
 
 ### Phase 2: Engineering Domain (Prove It Works)
 
@@ -585,7 +585,7 @@ RESEARCH ──► POSITION ──► PLAN ──► LAUNCH ──► MEASURE �
 8. Write `state-machines/engineering.md` — TDD + triage + PRD lifecycle
 9. Write `templates/engineering.md` — AGENTS.md template
 10. Write `extensions/pi.yaml` — Pi extension recommendations
-11. Test end-to-end: `/bootstrap` → engineering domain → project setup
+11. Test end-to-end: `/scaffold` → engineering domain → project setup
 
 ### Phase 3: Non-Engineering Domains
 
@@ -621,7 +621,7 @@ RESEARCH ──► POSITION ──► PLAN ──► LAUNCH ──► MEASURE �
 | **Context file** | AGENTS.md primary, derive CLAUDE.md/.cursor/rules | AGENTS.md is the open standard; harness files are derived subsets |
 | **Custom skill creation** | Delegate to `writing-great-skills` principles | Matt Pocock's 220K-installed reference > reinventing |
 | **Skill discovery UX** | Ranked by installs, links to review, override toggles | User makes informed decisions with easy overrides |
-| **Cross-domain** | Re-run bootstrap per domain, append to AGENTS.md | Composable, idempotent, no complex multi-domain interview |
+| **Cross-domain** | Re-run scaffold per domain, append to AGENTS.md | Composable, idempotent, no complex multi-domain interview |
 | **Extensions** | Per-harness mapping in catalog YAML | Different harnesses have different extension ecosystems |
 | **Process state machines** | Fully tailored per domain, composable via re-running | Each domain has distinct workflow; re-run appends new sections |
 | **Updates** | Skills refreshable (npx skills add is idempotent), AGENTS.md never overwritten | Safe upgrades, no lost customizations |
@@ -638,7 +638,7 @@ RESEARCH ──► POSITION ──► PLAN ──► LAUNCH ──► MEASURE �
 
 2. **Custom skill quality** — Add `metadata: { generated-by: "fat-skills-scaffold" }` to the frontmatter of generated skills. Include a prominent notice in the skill body: _"This skill was generated by fat-skills-scaffold. Test thoroughly before relying on it in production workflows."_ No automated validation beyond spec compliance (valid YAML frontmatter, required fields present).
 
-3. **CLAUDE.md derivation** — Full copy of AGENTS.md into CLAUDE.md, with a header comment noting the source: `<!-- Derived from AGENTS.md by fat-skills-scaffold. Edit AGENTS.md and re-run /bootstrap to update. -->` On re-runs, the entire CLAUDE.md is regenerated from the current AGENTS.md (since CLAUDE.md is a derived artifact, not a source of truth).
+3. **CLAUDE.md derivation** — Full copy of AGENTS.md into CLAUDE.md, with a header comment noting the source: `<!-- Derived from AGENTS.md by fat-skills-scaffold. Edit AGENTS.md and re-run /scaffold to update. -->` On re-runs, the entire CLAUDE.md is regenerated from the current AGENTS.md (since CLAUDE.md is a derived artifact, not a source of truth).
 
 4. **Custom domain handling** — When no catalog exists for the user's domain, fall back to: (a) full `npx skills search` across multiple keyword angles, (b) web search for relevant skills, MCP servers, and tools, (c) custom skill generation for all gaps. The catalog is a convenience, not a gate — the system works for any domain.
 

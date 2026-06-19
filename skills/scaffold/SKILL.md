@@ -1,13 +1,13 @@
 ---
-name: bootstrap
-description: Bootstrap a complete agent setup for any goal. Use when you want to configure a project with curated skills, tailored AGENTS.md, process state machines, and harness-specific extensions. Run once per domain — re-run to compose multiple domains.
+name: scaffold
+description: Scaffold a complete agent setup for any goal. Use when you want to configure a project with curated skills, tailored AGENTS.md, process state machines, and harness-specific extensions. Run once per domain — re-run to compose multiple domains.
 ---
 
-# Bootstrap
+# Scaffold
 
 Set up a complete, goal-driven agent environment for a project. The user states a goal, you interview them, research the best skills and tools, present a plan for approval, then write everything into their project directory.
 
-Each run targets **one domain**. Re-run `/bootstrap` to compose additional domains — skills are idempotent, AGENTS.md is append-only (never overwritten), and state machines compose by adding new sections.
+Each run targets **one domain**. Re-run `/scaffold` to compose additional domains — skills are idempotent, AGENTS.md is append-only (never overwritten), and state machines compose by adding new sections.
 
 ## Process
 
@@ -231,7 +231,7 @@ For each selected harness (beyond the universal AGENTS.md):
 
 **Claude Code** — if selected:
 - Write `CLAUDE.md` as a full copy of AGENTS.md
-- Prepend: `<!-- Derived from AGENTS.md by fat-skills-scaffold. Edit AGENTS.md and re-run /bootstrap to update. -->`
+- Prepend: `<!-- Derived from AGENTS.md by fat-skills-scaffold. Edit AGENTS.md and re-run /scaffold to update. -->`
 - On re-runs, regenerate CLAUDE.md entirely (it's derived, not source-of-truth)
 
 **Cursor** — if selected:
@@ -274,14 +274,14 @@ Use the user's issue tracker choice to pick the right template. If they chose Gi
 3. **Next steps** — suggest:
    - Run `/setup-matt-pocock-skills` (if engineering domain with Matt Pocock skills installed) to configure issue tracker
    - Try an initial prompt relevant to their domain
-   - Re-run `/bootstrap` to add another domain
+   - Re-run `/scaffold` to add another domain
 
 ## Re-running for cross-domain composition
 
-When `/bootstrap` is run again on a project that already has an AGENTS.md:
+When `/scaffold` is run again on a project that already has an AGENTS.md:
 
-1. In Phase 1, note that this is an additional domain, not the first setup
-2. In Phase 2, include the existing skills in the gap analysis (don't re-recommend installed skills)
+1. In Phase 1, note that this is an additional domain
+2. In Phase 2, include existing skills in the gap analysis (don't re-recommend installed skills)
 3. In Phase 3:
    - Skills: `npx skills add` is idempotent (skips duplicates)
    - AGENTS.md: append new sections, never overwrite existing

@@ -35,7 +35,7 @@ Write to: `<project_directory>/AGENTS.md`
 If the user selected Claude Code as a harness, derive CLAUDE.md from AGENTS.md:
 
 - Full copy of AGENTS.md content
-- Prepend: `<!-- Derived from AGENTS.md by fat-skills-scaffold. Edit AGENTS.md and re-run /bootstrap to update. -->`
+- Prepend: `<!-- Derived from AGENTS.md by fat-skills-scaffold. Edit AGENTS.md and re-run /scaffold to update. -->`
 - On re-runs, regenerate CLAUDE.md entirely (it's a derived artifact, not source-of-truth)
 - Write to: `<project_directory>/CLAUDE.md`
 
