@@ -1,0 +1,28 @@
+# Pi Extension Recommendations
+
+Extension recommendations organized by domain. Install via `pi install <source>`.
+
+## All domains
+
+These extensions are useful regardless of domain:
+
+| Extension | Source | Description | Required? |
+|---|---|---|---|
+| pi-mcp-adapter | `npm:pi-mcp-adapter` | MCP server integration without context bloat | Recommended |
+
+## Engineering
+
+| Extension | Source | Description | Required? |
+|---|---|---|---|
+| Pi-Astrolabe | `git:github.com/tech4ge/Pi-Astrolabe` | Tree-sitter code intelligence (AST tools) | Required |
+| Pi-Simple-Subagents | `git:github.com/tech4ge/Pi-Simple-Subagents` | Subagent delegation via RPC | Required |
+
+## Finance
+
+| Extension | Source | Description | Required? |
+|---|---|---|---|
+| pi-mcp-adapter | `npm:pi-mcp-adapter` | Connect to financial data MCP servers | Recommended |
+
+## Branding / GTM / Career / Research / Product
+
+No domain-specific Pi extensions yet. Use `pi-mcp-adapter` to connect to relevant MCP servers.

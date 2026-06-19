@@ -1,0 +1,95 @@
+domain: product
+description: Product management workflows — PRDs, user stories, roadmap planning, feature prioritization, and 4ge product toolkit
+
+skills:
+  mattpocock:
+    - name: to-prd
+      skill: mattpocock/skills@to-prd
+      description: Turn conversation context into a PRD. Use when planning a new feature or product.
+      tags: [prd, planning, product]
+      recommended: true
+
+    - name: grill-me
+      skill: mattpocock/skills@grill-me
+      description: Grilling session for non-code planning. Use to stress-test product ideas before committing.
+      tags: [planning, review, product]
+      recommended: true
+
+    - name: grill-with-docs
+      skill: mattpocock/skills@grill-with-docs
+      description: Grilling with codebase context. Use when the product change touches existing code.
+      tags: [planning, review, context]
+      recommended: false
+
+    - name: to-issues
+      skill: mattpocock/skills@to-issues
+      description: Break plans into vertical-slice issues. Use after PRD to create actionable work items.
+      tags: [issues, planning, breakdown]
+      recommended: true
+
+    - name: triage
+      skill: mattpocock/skills@triage
+      description: Issue triage state machine. Use for managing incoming feature requests and bugs.
+      tags: [triage, issues, workflow]
+      recommended: true
+
+    - name: handoff
+      skill: mattpocock/skills@handoff
+      description: Context handoff between sessions. Use when transitioning product work across sessions.
+      tags: [handoff, continuity]
+      recommended: false
+
+  marketplace:
+    - name: persona-project-manager
+      skill: googleworkspace/cli@persona-project-manager
+      description: Project management with persona-based planning. Use for structured project coordination.
+      tags: [project-management, planning, coordination]
+      recommended: false
+
+  custom:
+    - name: roadmap-planning
+      description: Build and maintain product roadmaps with themes, epics, and timelines. Prioritize features using RICE, MoSCoW, or custom frameworks. Align stakeholders around delivery plans.
+      tags: [roadmap, planning, prioritization, stakeholders]
+      interview_questions:
+        - What prioritization framework do you use? (RICE, MoSCoW, WSJF, custom)
+        - What's your roadmap time horizon? (quarterly, semi-annual, annual)
+        - Who are the key stakeholders to align?
+        - Do you track OKRs or KPIs tied to roadmap items?
+
+    - name: user-research
+      description: Plan and synthesize user research — interviews, surveys, usability tests. Build user personas from research data. Create research repositories.
+      tags: [user-research, interviews, personas, usability]
+      interview_questions:
+        - What research methods do you use? (interviews, surveys, usability tests, analytics)
+        - Do you have existing user personas or starting fresh?
+        - How many users do you typically research per cycle?
+        - Do you need a research repository or knowledge base?
+
+    - name: feature-spec
+      description: Write detailed feature specifications with user stories, acceptance criteria, edge cases, and design decisions. Bridge the gap between PRD and implementation.
+      tags: [spec, user-stories, acceptance-criteria, design]
+      interview_questions:
+        - What spec format do you use? (user stories, jobs-to-be-done, functional spec, other)
+        - Do you write acceptance criteria in Given/When/Then format?
+        - How detailed do specs need to be? (high-level direction vs implementation-ready)
+        - Do specs need design mockups or wireframes referenced?
+
+extensions:
+  pi:
+    required:
+      - name: Pi-Astrolabe
+        source: git:github.com/tech4ge/Pi-Astrolabe
+        description: Tree-sitter code intelligence — useful when PRDs touch codebase
+      - name: Pi-Simple-Subagents
+        source: git:github.com/tech4ge/Pi-Simple-Subagents
+        description: Subagent delegation — useful for parallel research tasks
+    recommended:
+      - name: pi-mcp-adapter
+        source: npm:pi-mcp-adapter
+        description: Connect to project management and analytics MCP servers
+
+  claude-code:
+    mcp-servers: []
+
+  cursor:
+    mcp-servers: []

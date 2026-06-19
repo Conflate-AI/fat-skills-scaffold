@@ -1,0 +1,78 @@
+domain: branding
+description: Content creation & personal branding workflows — writing, social media strategy, audience growth, and SEO
+
+skills:
+  marketplace:
+    - name: branding
+      skill: kostja94/marketing-skills@branding
+      description: Branding strategy development and brand identity work. Use when defining or refining a brand.
+      tags: [branding, strategy, identity]
+      recommended: true
+
+    - name: linkedin-personal-branding
+      skill: schwepps/skills@linkedin-personal-branding
+      description: LinkedIn personal branding and profile optimization. Use for LinkedIn-specific content strategy.
+      tags: [linkedin, personal-branding, profile]
+      recommended: true
+
+    - name: rebranding-strategy
+      skill: kostja94/marketing-skills@rebranding-strategy
+      description: Rebranding strategy and execution. Use when undergoing a brand transformation.
+      tags: [rebranding, strategy, transformation]
+      recommended: false
+
+    - name: social-media-image-sizes
+      skill: branding5/social-media-image-sizes@social-media-image-sizes
+      description: Reference for correct image dimensions across social media platforms. Use when creating visual content.
+      tags: [social-media, images, reference]
+      recommended: false
+
+  custom:
+    - name: content-calendar
+      description: Plan and schedule content across platforms with a structured calendar. Track themes, platforms, timing, and cross-posting strategies.
+      tags: [planning, scheduling, content, calendar]
+      interview_questions:
+        - Which platforms are you creating content for? (LinkedIn, Twitter/X, blog, newsletter, YouTube, other)
+        - What's your posting frequency? (daily, 3x/week, weekly)
+        - Do you have content themes or pillars?
+        - How far ahead do you plan content? (1 week, 1 month, 1 quarter)
+
+    - name: content-creation
+      description: Draft blog posts, social media content, newsletters, and other written content. Follow brand voice guidelines and platform-specific best practices.
+      tags: [writing, content, social-media, blog]
+      interview_questions:
+        - What's your brand voice? (professional, casual, witty, authoritative)
+        - What content types do you create? (long-form blog, short social posts, newsletters, case studies)
+        - Do you have existing brand guidelines or style rules?
+        - What's your typical content length? (short <500 words, medium 500-1500, long 1500+)
+
+    - name: audience-research
+      description: Understand and grow your target audience. Research demographics, pain points, content preferences, and growth opportunities.
+      tags: [audience, research, growth, analytics]
+      interview_questions:
+        - Who is your target audience? (role, industry, seniority)
+        - What questions or problems do they have?
+        - Do you have access to analytics? (LinkedIn analytics, Google Analytics, social insights)
+        - Are you trying to grow or better serve an existing audience?
+
+    - name: seo-optimization
+      description: SEO research and content optimization. Keyword research, on-page SEO, meta descriptions, and content structure for search visibility.
+      tags: [seo, keywords, optimization, search]
+      interview_questions:
+        - Are you optimizing for organic search? Which search engine is primary?
+        - Do you have existing keyword targets or topics?
+        - What SEO tools do you use? (Ahrefs, SEMrush, Google Search Console, none)
+        - Is local SEO relevant for you?
+
+extensions:
+  pi:
+    recommended:
+      - name: pi-mcp-adapter
+        source: npm:pi-mcp-adapter
+        description: Connect to social media and SEO MCP servers
+
+  claude-code:
+    mcp-servers: []
+
+  cursor:
+    mcp-servers: []

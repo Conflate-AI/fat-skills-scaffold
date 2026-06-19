@@ -1,0 +1,104 @@
+# Custom Skill Generation Reference
+
+When no existing skill covers a user's need, generate a custom skill. This reference distills the principles from Matt Pocock's `writing-great-skills` (220K+ installs on skills.sh) into a practical guide for generating skills that work.
+
+## Core principle
+
+A skill exists to wrangle **predictability** out of a stochastic system. Predictability means the agent follows the same _process_ every run — not that it produces the same output. Every design decision below serves predictability.
+
+## The interview per custom skill
+
+Before writing any skill, interview the user with these questions:
+
+1. **What should this skill do?** — 1-2 sentences. This becomes the core purpose.
+2. **When should it trigger?** — What tasks or phrases should cause the agent to activate this skill? These become the description keywords.
+3. **What are the key steps?** — An ordered list of what the agent should do. Each step ends with a **completion criterion** (a checkable condition that tells the agent the step is done).
+4. **What completion criteria for each step?** — Make them _exhaustive_ ("every modified file accounted for", not "produce a change list"). Vague criteria invite premature completion.
+5. **What reference material is needed?** — Templates, glossaries, examples, format guides. These go into separate files (progressive disclosure), not inline.
+6. **Model-invoked or user-invoked?** — Can the agent decide to use this on its own (model-invoked, costs context load), or should only the user trigger it (user-invoked, zero context load)?
+
+## Information hierarchy
+
+Content in a skill sits on a ladder ranked by how immediately the agent needs it:
+
+1. **In-skill step** — an ordered action in SKILL.md. Primary tier. Each step ends on a completion criterion.
+2. **In-skill reference** — a definition, rule, or fact in SKILL.md. Consulted on demand.
+3. **External reference** — pushed out of SKILL.md into a separate file, reached by a context pointer, loaded only when needed.
+
+Push too little down and the top bloats; push too much and you hide material the agent needs. The tension is the whole decision.
+
+**Progressive disclosure** is the move down the ladder — out of SKILL.md into a linked file. Mechanics: a linked `.md` file in the skill directory, named for what it holds.
+
+## Writing the description
+
+A model-invoked description does two jobs: state what the skill is, and list the branches that should trigger it.
+
+- **Front-load the skill's leading word** — the description is where it does its invocation work
+- **One trigger per branch** — synonyms that rename a single branch are duplication. Collapse them.
+- **Cut identity that's already in the body** — keep the description to triggers, plus any "when another skill needs…" reach clause
+
+## Leading words
+
+A leading word is a compact concept already in the model's pretraining that the agent thinks with while running the skill (e.g. _red_, _green_, _refactor_ for TDD). Repeated throughout the text, it accumulates a distributed definition and anchors a region of behaviour in the fewest tokens.
+
+Hunt for opportunities to refactor prose into leading words. A triad spelled out at three sites (duplication), a description spending a sentence to gesture at one idea — each is a passage begging to collapse into a single pretrained token.
+
+## When to split
+
+Split a skill only when the cut earns it:
+
+- **By invocation** — split off a model-invoked skill when you have a distinct leading word that should trigger it on its own, or another skill must reach it. You pay context load for the new always-loaded description.
+- **By sequence** — split a run of steps when the steps still ahead tempt the agent to rush the one in front of it (premature completion). Keeping them out of view encourages the agent to do more legwork on the current task.
+
+## Pruning
+
+- **Single source of truth** — one authoritative place for each meaning, so changing behaviour is a one-place edit
+- **Relevance** — does every line still bear on what the skill does?
+- **No-ops** — run the no-op test on each sentence: does it change behaviour versus the default? If not, delete it. Be aggressive.
+
+## Failure modes to watch for
+
+- **Premature completion** — ending a step before it's genuinely done. Defence: sharpen the completion criterion first (cheap, local); only if irreducibly fuzzy, split the sequence.
+- **Duplication** — same meaning in more than one place. Costs maintenance and tokens.
+- **Sediment** — stale layers that settle because adding feels safe and removing feels risky.
+- **Sprawl** — a skill simply too long. Cure: the ladder — disclose reference behind pointers, split by branch or sequence.
+- **No-op** — a line the model already obeys by default. Delete it.
+
+## SKILL.md template
+
+```yaml
+---
+name: <skill-name>
+description: <What this skill does and when to use it. Include specific trigger keywords.>
+metadata:
+  generated-by: "fat-skills-scaffold"
+---
+
+> ⚠️ This skill was generated by fat-skills-scaffold. Test thoroughly before relying on it in production workflows.
+
+# <Skill Name>
+
+## <Step 1 title>
+
+<Instructions for this step.>
+
+**Done when:** <completion criterion — checkable, exhaustive>
+
+## <Step 2 title>
+
+<Instructions for this step.>
+
+**Done when:** <completion criterion>
+
+## Reference
+
+See [reference-file.md](reference-file.md) for <what it contains>.
+```
+
+## Key rules
+
+- Keep SKILL.md under 500 lines. Move detailed reference material to separate files.
+- Reference files should be one level deep from SKILL.md. Avoid deeply nested reference chains.
+- Use relative paths from the skill directory for all file references.
+- The `name` field must be lowercase a-z, 0-9, hyphens only. No consecutive hyphens. Max 64 chars.
+- The `description` field must be non-empty, max 1024 chars. Include specific trigger keywords.

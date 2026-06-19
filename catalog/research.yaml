@@ -1,0 +1,66 @@
+domain: research
+description: Research & knowledge management workflows — literature reviews, synthesis, note-taking, and academic workflows
+
+skills:
+  marketplace:
+    - name: obsidian-vault
+      skill: mattpocock/skills@obsidian-vault
+      description: Obsidian vault management and knowledge graph workflows. Use when organizing research notes and building a personal knowledge base.
+      tags: [obsidian, notes, knowledge-graph]
+      recommended: false
+
+    - name: teach
+      skill: mattpocock/skills@teach
+      description: Structured learning and teaching workflow. Use when studying a topic deeply or creating educational content from research.
+      tags: [learning, teaching, study]
+      recommended: false
+
+  custom:
+    - name: literature-review
+      description: Conduct structured literature reviews — search, screen, extract, and synthesize findings. Track sources, assess quality, and identify gaps in existing research.
+      tags: [literature-review, synthesis, academic, sources]
+      interview_questions:
+        - What field or topic are you researching?
+        - What databases/sources do you use? (Google Scholar, PubMed, arXiv, proprietary)
+        - Do you have inclusion/exclusion criteria for sources?
+        - What's the output format? (narrative review, systematic review, annotated bibliography)
+
+    - name: note-synthesis
+      description: Transform raw notes and highlights into structured knowledge. Create connections between ideas, build progressive summaries, and maintain a searchable knowledge base.
+      tags: [notes, synthesis, zettelkasten, knowledge]
+      interview_questions:
+        - What note-taking system do you use? (Zettelkasten, progressive summarization, cornell, freeform)
+        - Do you use a specific tool? (Obsidian, Notion, Roam, plain markdown)
+        - How do you currently capture insights from reading?
+        - Do you need to link notes to specific sources?
+
+    - name: research-question
+      description: Frame and refine research questions. Move from broad curiosity to specific, answerable questions. Identify methodology and data needs.
+      tags: [question, methodology, framing, hypothesis]
+      interview_questions:
+        - Is this academic, professional, or personal research?
+        - What's your current question or area of curiosity?
+        - Do you need quantitative or qualitative methods?
+        - What's the scope? (quick exploration, deep study, ongoing monitoring)
+
+    - name: source-validation
+      description: Evaluate source credibility, detect bias, cross-reference claims, and assess evidence quality. Build a reliability framework for research sources.
+      tags: [validation, bias, credibility, evidence]
+      interview_questions:
+        - What types of sources are you evaluating? (academic papers, news, reports, data)
+        - Do you have a bias detection framework?
+        - How rigorous does validation need to be? (quick check, formal review, systematic)
+        - Are you working in a domain with known misinformation challenges?
+
+extensions:
+  pi:
+    recommended:
+      - name: pi-mcp-adapter
+        source: npm:pi-mcp-adapter
+        description: Connect to academic and research MCP servers
+
+  claude-code:
+    mcp-servers: []
+
+  cursor:
+    mcp-servers: []

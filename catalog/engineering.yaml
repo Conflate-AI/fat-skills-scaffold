@@ -1,0 +1,118 @@
+domain: engineering
+description: Software engineering & development workflows — building, testing, debugging, and shipping software
+
+skills:
+  mattpocock:
+    - name: tdd
+      skill: mattpocock/skills@tdd
+      description: Test-driven development red-green-refactor. Use when building features or fixing bugs test-first.
+      tags: [testing, development, workflow]
+      recommended: true
+
+    - name: grill-with-docs
+      skill: mattpocock/skills@grill-with-docs
+      description: Stress-test plans against domain model, build shared language and context. Use before starting any non-trivial change.
+      tags: [planning, review, context]
+      recommended: true
+
+    - name: diagnosing-bugs
+      skill: mattpocock/skills@diagnosing-bugs
+      description: Disciplined bug diagnosis loop — reproduce, hypothesise, instrument, fix. Use for debugging.
+      tags: [debugging, workflow]
+      recommended: true
+
+    - name: to-prd
+      skill: mattpocock/skills@to-prd
+      description: Turn conversation context into a PRD. Use when planning a new feature.
+      tags: [planning, product]
+      recommended: true
+
+    - name: implement
+      skill: mattpocock/skills@implement
+      description: Implement a PRD or plan with disciplined steps. Use after planning.
+      tags: [implementation, workflow]
+      recommended: true
+
+    - name: improve-codebase-architecture
+      skill: mattpocock/skills@improve-codebase-architecture
+      description: Find deepening and refactoring opportunities. Use periodically to prevent architecture decay.
+      tags: [architecture, refactoring]
+      recommended: true
+
+    - name: triage
+      skill: mattpocock/skills@triage
+      description: Issue triage state machine. Use when managing incoming issues and bugs.
+      tags: [issues, workflow]
+      recommended: true
+
+    - name: to-issues
+      skill: mattpocock/skills@to-issues
+      description: Break plans into vertical-slice issues. Use after PRD creation.
+      tags: [planning, issues]
+      recommended: true
+
+    - name: codebase-design
+      skill: mattpocock/skills@codebase-design
+      description: Design module interfaces and architecture before implementation. Use for larger projects.
+      tags: [architecture, design]
+      recommended: false
+
+    - name: grill-me
+      skill: mattpocock/skills@grill-me
+      description: Non-code grilling session. Use for non-engineering planning or when no codebase context exists.
+      tags: [planning, review]
+      recommended: false
+
+    - name: handoff
+      skill: mattpocock/skills@handoff
+      description: Context handoff between sessions. Use when ending a session to preserve context.
+      tags: [workflow, continuity]
+      recommended: false
+
+    - name: writing-great-skills
+      skill: mattpocock/skills@writing-great-skills
+      description: Reference for writing and editing skills well. Use when creating new skills.
+      tags: [meta, skills]
+      recommended: false
+
+  marketplace:
+    - name: typescript-advanced-types
+      skill: wshobson/agents@typescript-advanced-types
+      description: Advanced TypeScript type patterns and best practices.
+      tags: [typescript, types]
+      condition: "tech_stack includes typescript"
+      recommended: false
+
+  custom: []
+
+extensions:
+  pi:
+    required:
+      - name: Pi-Astrolabe
+        source: git:github.com/tech4ge/Pi-Astrolabe
+        description: Tree-sitter code intelligence — ast_outline, ast_imports, ast_exports, ast_callees, ast_node_at tools
+
+      - name: Pi-Simple-Subagents
+        source: git:github.com/tech4ge/Pi-Simple-Subagents
+        description: Subagent delegation via RPC — scout, worker, reviewer agents
+
+    recommended:
+      - name: pi-mcp-adapter
+        source: npm:pi-mcp-adapter
+        description: MCP server integration without context bloat — one proxy tool instead of hundreds
+
+  claude-code:
+    mcp-servers:
+      - name: playwright
+        config:
+          command: npx
+          args: ["-y", "@anthropic-ai/mcp-playwright"]
+        description: Browser automation for testing
+
+  cursor:
+    mcp-servers:
+      - name: playwright
+        config:
+          command: npx
+          args: ["-y", "@anthropic-ai/mcp-playwright"]
+        description: Browser automation for testing

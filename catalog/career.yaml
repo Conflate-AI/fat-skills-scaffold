@@ -1,0 +1,72 @@
+domain: career
+description: Career development workflows — planning, skill building, job search, and professional growth
+
+skills:
+  marketplace:
+    - name: career-transitions
+      skill: refoundai/lenny-skills@career-transitions
+      description: Career transition guidance and planning. Use when changing roles, industries, or career paths.
+      tags: [career, transitions, planning]
+      recommended: true
+
+    - name: career-changer-translator
+      skill: paramchoudhary/resumeskills@career-changer-translator
+      description: Translate experience from one career into language for another. Use for career changers reframing their background.
+      tags: [resume, career-change, translation]
+      recommended: false
+
+    - name: career-ops-job-search
+      skill: aradotso/trending-skills@career-ops-job-search
+      description: Job search operations and tracking. Use for organizing and managing an active job search.
+      tags: [job-search, operations, tracking]
+      recommended: false
+
+  custom:
+    - name: career-assessment
+      description: Self-assessment of skills, values, interests, and career trajectory. Identify strengths, gaps, and growth areas. Build a personal career profile.
+      tags: [assessment, skills, values, self-awareness]
+      interview_questions:
+        - What stage are you at in your career? (early, mid, senior, executive)
+        - Are you looking to grow in your current path or pivot?
+        - What matters most to you? (impact, income, growth, autonomy, balance)
+        - Do you have a mentor or career advisor?
+
+    - name: skill-gap-analysis
+      description: Identify skill gaps between current capabilities and target role/career. Create a learning plan with priorities, resources, and timelines.
+      tags: [skills, gap-analysis, learning, development]
+      interview_questions:
+        - What's your target role or career level?
+        - What skills do you already have that are transferable?
+        - How much time can you dedicate to skill development? (hours/week)
+        - Do you prefer structured courses, books, projects, or mentorship?
+
+    - name: resume-and-profile
+      description: Build and optimize resumes, LinkedIn profiles, and professional bios. Tailor content for specific roles and industries. Follow ATS best practices.
+      tags: [resume, linkedin, profile, ats]
+      interview_questions:
+        - What format do you need? (resume, LinkedIn profile, both, portfolio)
+        - Are you targeting a specific role or keeping it general?
+        - Do you have an existing resume to build on?
+        - What industry/sector are you targeting?
+
+    - name: interview-prep
+      description: Prepare for interviews — behavioral, technical, and case. Generate practice questions, structure STAR stories, and simulate interview conversations.
+      tags: [interview, preparation, behavioral, technical]
+      interview_questions:
+        - What type of interviews? (behavioral, technical, case, panel, other)
+        - What level are you interviewing at? (IC, manager, director, VP)
+        - Do you have specific companies or roles you're targeting?
+        - How much prep time do you have?
+
+extensions:
+  pi:
+    recommended:
+      - name: pi-mcp-adapter
+        source: npm:pi-mcp-adapter
+        description: Connect to job search and professional data MCP servers
+
+  claude-code:
+    mcp-servers: []
+
+  cursor:
+    mcp-servers: []

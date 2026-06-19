@@ -1,0 +1,9 @@
+{
+  "name": "fat-skills-scaffold",
+  "version": "0.1.0",
+  "description": "Goal-driven agent setup bootstrapper — interview, curate skills, generate context, configure any harness",
+  "keywords": ["pi-package"],
+  "pi": {
+    "skills": ["./skills"]
+  }
+}

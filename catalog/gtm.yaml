@@ -1,0 +1,66 @@
+domain: gtm
+description: Go-to-market & business strategy workflows — market research, positioning, launch planning, and metrics
+
+skills:
+  marketplace:
+    - name: go-to-market-strategy
+      skill: manojbajaj95/claude-gtm-plugin@go-to-market-strategy
+      description: Go-to-market strategy development. Use when planning market entry or product launches.
+      tags: [gtm, strategy, launch]
+      recommended: true
+
+    - name: go-to-market-planner
+      skill: nicepkg/ai-workflow@go-to-market-planner
+      description: Go-to-market planning and execution framework. Use for structured GTM planning.
+      tags: [gtm, planning, framework]
+      recommended: true
+
+  custom:
+    - name: market-research
+      description: Competitive analysis, market sizing (TAM/SAM/SOM), customer interviews synthesis, and industry landscape mapping. Structure research into actionable insights.
+      tags: [research, competitive, market-sizing, interviews]
+      interview_questions:
+        - What market are you entering or analyzing? (B2B SaaS, consumer, marketplace, other)
+        - Do you have existing competitive intelligence or starting from scratch?
+        - How many competitors do you need to analyze?
+        - Do you have customer interview data, or do you need an interview guide?
+
+    - name: positioning
+      description: Define Ideal Customer Profile (ICP), value proposition, messaging framework, and differentiation. Build a positioning document that aligns sales, marketing, and product.
+      tags: [positioning, icp, messaging, value-prop]
+      interview_questions:
+        - Do you already have an ICP defined, or starting fresh?
+        - What's your pricing model? (freemium, subscription, usage-based, enterprise)
+        - Who are your closest competitors and how do you differ?
+        - Is this B2B, B2C, or platform/marketplace?
+
+    - name: launch-planning
+      description: Create detailed launch plans with timelines, channel strategy, owner assignments, and launch-day checklists. Coordinate across marketing, sales, product, and success.
+      tags: [launch, planning, timeline, channels]
+      interview_questions:
+        - What type of launch? (new product, feature, market expansion, rebrand)
+        - What channels will you use? (product-led, sales-led, community, PR, paid)
+        - Do you have a launch budget range?
+        - How many people are on the launch team?
+
+    - name: metrics-and-iteration
+      description: Define launch KPIs, set up tracking, attribute results to channels, and iterate on GTM strategy based on data. Build a measurement framework.
+      tags: [metrics, kpis, attribution, iteration]
+      interview_questions:
+        - What are your primary GTM KPIs? (MRR, pipeline, activation, retention)
+        - Do you have analytics infrastructure in place?
+        - What's your review cadence? (weekly, bi-weekly, monthly)
+        - Do you need A/B testing frameworks?
+
+extensions:
+  pi:
+    recommended:
+      - name: pi-mcp-adapter
+        source: npm:pi-mcp-adapter
+        description: Connect to analytics and market data MCP servers
+
+  claude-code:
+    mcp-servers: []
+
+  cursor:
+    mcp-servers: []

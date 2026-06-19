@@ -1,0 +1,80 @@
+domain: finance
+description: Financial analysis & investment workflows — modeling, research, risk assessment, and reporting
+
+skills:
+  marketplace:
+    - name: wind-find-finance
+      skill: wind-information-co-ltd/wind-skills@wind-find-finance-skill
+      description: Financial data lookup and market research via Wind. Use when needing market data, stock quotes, or financial indicators.
+      tags: [data, research, markets]
+      recommended: true
+
+    - name: yahoo-finance
+      skill: gracefullight/stock-checker@yahoo-finance
+      description: Yahoo Finance data lookup for stock prices, historical data, and financial metrics. Use for US and international market data.
+      tags: [data, stocks, us-markets]
+      recommended: true
+
+    - name: finance-expert
+      skill: personamanagmentlayer/pcl@finance-expert
+      description: Financial analysis and advisory guidance. Use for general financial questions and analysis frameworks.
+      tags: [analysis, advisory]
+      recommended: false
+
+    - name: tushare-finance
+      skill: stanleychanh/tushare-finance-skill-for-claude-code@tushare-finance
+      description: Chinese A-share market data via Tushare API. Use for China-specific financial analysis.
+      tags: [data, china, stocks]
+      condition: "market includes china"
+      recommended: false
+
+  custom:
+    - name: financial-modeling
+      description: Build and validate financial models — DCF, LBO, merger, comparable analysis, budget models. Structured approach with assumption tracking and sensitivity analysis.
+      tags: [modeling, analysis, valuation]
+      interview_questions:
+        - What types of models do you build? (DCF, LBO, merger, budget, other)
+        - What data sources do you use for assumptions? (Bloomberg, Capital IQ, public filings, internal)
+        - What's your output format? (Excel, markdown report, dashboard, presentation)
+        - Do you need sensitivity/scenario tables built into models?
+
+    - name: risk-assessment
+      description: Portfolio risk analysis, stress testing, scenario modeling. Track VaR, Sharpe ratio, max drawdown, and other risk metrics.
+      tags: [risk, portfolio, stress-testing]
+      interview_questions:
+        - What risk metrics do you track? (VaR, Sharpe, max drawdown, beta, other)
+        - What time horizons for analysis? (daily, weekly, monthly, quarterly)
+        - Any regulatory requirements? (Basel, SEC, internal policy)
+        - Do you need Monte Carlo simulation capabilities?
+
+    - name: investment-memo
+      description: Structured investment memo and thesis writing. Follow a consistent format for investment decisions with clear thesis, risks, and conviction level.
+      tags: [writing, analysis, communication, decisions]
+      interview_questions:
+        - What's your memo format? (long-form, 1-pager, pitch deck, IC memo)
+        - What sections are required? (thesis, risks, valuation, catalysts, timeline)
+        - Who's the audience? (investment committee, LPs, internal team)
+        - Do you have a conviction rating system?
+
+extensions:
+  pi:
+    recommended:
+      - name: pi-mcp-adapter
+        source: npm:pi-mcp-adapter
+        description: Connect to financial data MCP servers (Alpha Vantage, etc.)
+
+  claude-code:
+    mcp-servers:
+      - name: alpha-vantage
+        config:
+          command: npx
+          args: ["-y", "alpha-vantage-mcp"]
+        description: Alpha Vantage financial data API — stock quotes, historical data, technical indicators
+
+  cursor:
+    mcp-servers:
+      - name: alpha-vantage
+        config:
+          command: npx
+          args: ["-y", "alpha-vantage-mcp"]
+        description: Alpha Vantage financial data API — stock quotes, historical data, technical indicators
